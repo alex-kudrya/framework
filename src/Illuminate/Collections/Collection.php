@@ -1458,6 +1458,25 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
     }
 
     /**
+     * Sort the collection by date column.
+     *
+     * @param string $column
+     * @param bool $descending
+     * @return static
+     */
+    public function sortByDate(string $column, bool $descending = false)
+    {
+        return $this->sortBy(function ($datum) use ($column) {
+                    return strtotime(
+                        ((object)$datum)->$column
+                    );
+                }, 
+                SORT_REGULAR,
+                $descending
+            );
+    }
+
+    /**
      * Sort the collection keys.
      *
      * @param  int  $options
